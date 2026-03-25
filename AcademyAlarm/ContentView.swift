@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     //TODO: annotate alarms with @State to make it mutable and reactive
-    var alarms: [Alarm] = [
+    @State var alarms: [Alarm] = [
         Alarm(time: Calendar.current.date(byAdding: .hour, value: 7, to: Date())!, label: "Morning Jog"),
         Alarm(time: Calendar.current.date(byAdding: .hour, value: 22, to: Date())!, label: "Bedtime")
     ]
@@ -76,6 +76,11 @@ struct ContentView: View {
                 // TODO: Pass alarms and isShowingAddModal as bindings to AddAlarmSheet for adding new alarms and dismissing the sheet
                 AddAlarmSheet(alarms: alarms, isPresented: isShowingAddModal)
             }
+        }
+        .onAppear {
+            /// this will force refresh the state to fix List onDelete bug
+            alarms.append(.init())
+            alarms.removeLast()
         }
     }
 }
