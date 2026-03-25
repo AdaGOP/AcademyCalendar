@@ -8,11 +8,20 @@
 import Foundation
 import Observation
 
-/// @Observable Alarm Model
-/// This model is used throughout all lessons to demonstrate different state management patterns.
-/// The @Observable macro allows this class to work with SwiftUI's reactive system automatically.
-// TODO: annotate with @Observable to make it reactive and compatible with SwiftUI
-final class Alarm: Identifiable {
+// NOTE:
+// Use @Observable if you convert this model into a class.
+// This allows each Alarm instance to manage its own mutable state,
+// rather than relying on a parent ViewModel to store and update it.
+//
+// - struct (current):
+//   Best for value semantics. State is managed externally (e.g., in a ViewModel).
+//   Updates require replacing the whole value.
+//
+// - class + @Observable:
+//   Best for shared, mutable state.
+//   Each Alarm becomes a reference type, and SwiftUI will automatically
+//   observe and react to property changes within the object.
+struct Alarm: Identifiable {
     let id: UUID
     var time: Date
     var label: String
